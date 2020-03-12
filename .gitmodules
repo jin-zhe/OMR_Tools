@@ -1,0 +1,4 @@
+[submodule "submodules/OMRChecker"]
+	path = submodules/OMRChecker
+	url = https://github.com/leongwaikay/OMRChecker.git
+	branch = extension-framework
