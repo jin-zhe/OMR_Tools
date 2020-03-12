@@ -6,7 +6,32 @@ First, get this repo and its submodules on your machine:
 ```sh
 git clone --recursive git@github.com:jin-zhe/OMR_Tools.git
 ```
-TODO later
+I recommend installing the necessary python packages via [Conda](https://docs.conda.io/en/latest/index.html) which has become the de facto virtual environment manager for AI/ML projects (which this might potentially turn into). Conda also makes the installation process really simple because it is also a package-management system. If you rather not use Conda, you may refer to [OMRChecker](https://github.com/Udayraj123/OMRChecker)'s original installation guide using `pip`. Should you do that, just make sure you have the important packages listed under [Packages](https://github.com/jin-zhe/OMR_Tools#packages).
+
+### Installing with Conda
+
+1. Follow this [quickstart guide](https://jin-zhe.github.io/guides/getting-up-to-speed-with-conda/) to install and understand how to use Conda
+2. Create a new Conda environment with necessary packages:
+  * `conda create -n omr_tools python=3.5 opencv matplotlib numpy pandas tqdm -y`
+3. Enter newly created environment
+  * `conda activate omr_tools`
+4. `pip install PyPDF2` (this is the only one you have to install via pip)
+
+### Packages
+This repo has been tested to work with the following python package versions:
+
+Package | Version
+--- | ---
+`opencv` | v3.4.2
+`opencv-contrib-python` | 4.2.0.32
+`matplotlib` | 3.1.1
+`numpy` | 1.18.1
+`pandas` | 1.0.1
+`imutils` | 0.5.3
+`tqdm` | 4.42.1
+`PyPDF2` | 1.26.0
+
+opencv-contrib-python
 
 ### Submodules
 As submodules are included in this repository, make sure you get the right one. If you didn't clone this repo with the `--recursive` flag, you'll need to run:
