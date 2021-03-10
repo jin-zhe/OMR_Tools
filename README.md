@@ -15,7 +15,7 @@ I recommend installing the necessary python packages via [Conda](https://docs.co
   * `conda create -n omr_tools python=3.5 opencv matplotlib numpy pandas tqdm -y`
 3. Enter newly created environment
   * `conda activate omr_tools`
-4. `pip install pdf2image` (this is the only one you have to install via `pip`)
+4. `pip install pdf2image imutils` (these are the only two you have to install via `pip`)
 
 ### Packages
 This repo has been tested to work with the following python package versions:
