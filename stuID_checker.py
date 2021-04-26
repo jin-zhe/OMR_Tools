@@ -1,4 +1,5 @@
 from pdf2image import convert_from_path
+from datetime import datetime
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
@@ -26,8 +27,15 @@ def rename_docs(results, input_dir):
     filename = result[0]
     stu_id = result[1]
     src_path = input_dir / filename 
-    dst_path = (input_dir / stu_id).with_suffix('.pdf')
-    os.rename(src_path, dst_path)
+    dst_path = (input_dir / stu_id)
+    if dst_path.with_suffix('.pdf').exists(): # check and resolve filename conflicts
+      print(f'{dst_path}.pdf already exists!')
+      dst_path /= '_' + datetime.now().strftime("%Y%m%d%H%M%S%f")
+    dst_path = dst_path.with_suffix('.pdf')
+    try:
+      os.rename(src_path, dst_path)
+    except:
+      print(f'Failed to rename from {src_path} to {dst_path}!')
 
 def filter_filenames(directory, extensions=('*.pdf','*.PDF')):
   return sorted([f for ext in extensions for f in directory.glob(ext)])
@@ -68,14 +76,18 @@ def process_dir(input_dir, output_path, template, rename, target_page=0):
     results.append([doc_filename] + result)
     print(result)
 
-  write_csv(results, output_path)
+  try:
+    write_csv(results, output_path)
+    print(f'Results CSV written to {output_path}')
+  except:
+    print('CSV writing failed!')
   if rename:
     rename_docs(results, input_dir)
 
 def main():
   argparser = argparse.ArgumentParser()
   argparser.add_argument("-i", "--input-dir", required=True, dest='input_dir', help="Specify an input directory.")
-  argparser.add_argument("-o", "--output", default='outputs', required=False, dest='output_path', help="Specify output path for the CSV.")
+  argparser.add_argument("-o", "--output", default='outputs.csv', required=False, dest='output_path', help="Specify output path for the CSV.")
   argparser.add_argument("-p", "--page", default=0, type=int, dest='page', help="Specify the page to conduct OMR on.")
   argparser.add_argument("-r", "--rename",  action='store_true', dest='rename', help="Specify wether to rename documents based on their student numbers.")
   argparser.add_argument("-s", "--save-level", default=0, type=int, dest='save_level', help="Specify saveimglvl of OMRChecker.")
@@ -86,6 +98,7 @@ def main():
     argparser.print_help()
     exit(11)
 
+  # Process arugments
   ext_mgr = ExtensionManager(config.EXTENSION_PATH)
   template_path = Path(SUBMODULE_DIR) / 'samples' / 'sample5_fb_alignment' / 'template_fb_align.json'
   template = Template(template_path, ext_mgr.extensions)
@@ -93,6 +106,13 @@ def main():
   output_path = Path(args['output_path'])
   target_page = args['page']
   rename = args['rename']
+
+  # Errors and warnings
+  print(f'File renaming is set to {rename}.')
+  if output_path.is_dir():
+    raise ValueError('CSV output cannot be a directory!')
+
+  # Procedure call
   config.saveimglvl = args['save_level']
   process_dir(input_dir, output_path, template, rename, target_page=target_page)
 
