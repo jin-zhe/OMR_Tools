@@ -12,10 +12,10 @@ I recommend installing the necessary python packages via [Conda](https://docs.co
 
 1. Follow this [quickstart guide](https://jin-zhe.github.io/guides/getting-up-to-speed-with-conda/) to install and understand how to use Conda
 2. Create a new Conda environment with necessary packages:
-  * `conda create -n omr_tools python=3.5 opencv matplotlib numpy pandas tqdm -y`
+  * `conda create -n omr_tools python=3.5 opencv matplotlib numpy pandas tqdm poppler -y`
 3. Enter newly created environment
   * `conda activate omr_tools`
-4. `pip install PyPDF2` (this is the only one you have to install via `pip`)
+4. `pip install pdf2image imutils` (these are the only two you have to install via `pip`)
 
 ### Packages
 This repo has been tested to work with the following python package versions:
@@ -24,11 +24,13 @@ Package | Version
 --- | ---
 `opencv` | v3.4.2
 `opencv-contrib-python` | 4.2.0.32
-`matplotlib` | 3.1.1
-`numpy` | 1.18.1
-`pandas` | 1.0.1
-`imutils` | 0.5.3
-`tqdm` | 4.42.1
+`matplotlib` | 3.3.4
+`numpy` | 1.19.2
+`pandas` | 1.2.3
+`imutils` | 0.5.4
+`tqdm` | 4.56.0
+`pdf2image ` | 1.14.0
+`poppler` | 0.81.0
 `PyPDF2` | 1.26.0
 
 opencv-contrib-python
